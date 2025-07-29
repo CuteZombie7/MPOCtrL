@@ -268,6 +268,7 @@ def load_reactions_auxiliary_genes(args, map, reactions_genes_dict):
     read_path = os.path.join(args.network_dir_path, args.reactions_auxiliary_genes_file_name)
     with open(read_path, 'r') as f:
         res = json.load(f)
+    res = {k: v for k, v in res.items() if k in reactions_genes_dict}
     return res
 
 def remove_allZero_rowAndCol(factors_nodes):
