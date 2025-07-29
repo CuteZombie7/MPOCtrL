@@ -1,0 +1,233 @@
+{
+    "M_1": [
+        "G6PC1"
+    ],
+    "M_3": [
+        "GAPDH",
+        "PGAM2",
+        "TPI1",
+        "TKTL2",
+        "GAPDHS"
+    ],
+    "M_4": [
+        "LDHA",
+        "PDHA2",
+        "PGK1"
+    ],
+    "M_5": [
+        "PRPS1L1",
+        "GAPDHS",
+        "APRT",
+        "DERA"
+    ],
+    "M_7": [
+        "SBDS",
+        "LDHAL6A"
+    ],
+    "M_9": [
+        "PHYH",
+        "IDH3G",
+        "BCKDHB",
+        "KDM4D",
+        "ACLY",
+        "CTDSP2",
+        "ELOVL1",
+        "FAHD1",
+        "IDH3A",
+        "HADHB",
+        "PAICS",
+        "LDHAL6B",
+        "CS",
+        "UROD",
+        "DPAGT1",
+        "ACAA2",
+        "IDH3B",
+        "TAF1L"
+    ],
+    "M_10": [
+        "RIMKLB",
+        "FTCD",
+        "GOT2",
+        "NAALADL2"
+    ],
+    "M_12": [
+        "AASS",
+        "RIMKLB",
+        "BCAT1",
+        "NAALADL2"
+    ],
+    "M_15": [
+        "AASS",
+        "AGXT",
+        "KYAT3",
+        "GLUD1"
+    ],
+    "M_17": [
+        "GLUD1"
+    ],
+    "M_19": [
+        "MDH1",
+        "MDH2",
+        "GOT2"
+    ],
+    "M_21": [
+        "RIMKLB",
+        "SUCLA2",
+        "SUCLG1",
+        "SUCLG2"
+    ],
+    "M_22": [
+        "ALDH3A2",
+        "GLUD1",
+        "NIT2",
+        "GOT2",
+        "SUCLG1",
+        "ALDH9A1",
+        "SUCLA2"
+    ],
+    "M_25": [
+        "GSR"
+    ],
+    "M_26": [
+        "GPX8",
+        "GPX3",
+        "GPX2",
+        "GSTA4",
+        "ESD",
+        "GSTA1"
+    ],
+    "M_27": [
+        "GPX8",
+        "GPX3",
+        "GPX1",
+        "PRDX5",
+        "ESD",
+        "TXNRD3"
+    ],
+    "M_28": [
+        "GSTT4"
+    ],
+    "M_31": [
+        "KYAT3",
+        "GGCT"
+    ],
+    "M_32": [
+        "GOLT1B"
+    ],
+    "M_36": [
+        "TET2",
+        "KDM4C",
+        "KYAT3",
+        "KDM6A",
+        "CSAD",
+        "TET3",
+        "KDM2B",
+        "CA5B",
+        "TMLHE",
+        "KDM7A",
+        "TYW1B",
+        "KDM3B",
+        "SUCLG2",
+        "KDM4B",
+        "GLUD1",
+        "KDM2A",
+        "OXCT1",
+        "ABAT",
+        "HECA",
+        "SPTLC1",
+        "L2HGDH",
+        "KDM5C",
+        "BCKDHB",
+        "DDT",
+        "D2HGDH",
+        "TYW1",
+        "ELOVL5",
+        "PHF8"
+    ],
+    "M_37": [
+        "KDM4B",
+        "KDM6A",
+        "TET3",
+        "TMLHE",
+        "KDM4C",
+        "PHF8",
+        "KDM5C"
+    ],
+    "M_38": [
+        "MDH2",
+        "TMLHE",
+        "SUCLG1",
+        "MDH1",
+        "KDM3B",
+        "SUCLA2",
+        "SUCLG2"
+    ],
+    "M_39": [
+        "PHYH",
+        "KDM6A",
+        "KDM2B",
+        "TMLHE",
+        "KDM5A",
+        "HADHB",
+        "KDM2A",
+        "OXCT1",
+        "KDM4C",
+        "KDM3B",
+        "PHF8",
+        "P4HA1",
+        "KDM5C"
+    ],
+    "M_40": [
+        "MDH1",
+        "NIT2",
+        "GOT2"
+    ],
+    "M_43": [
+        "ALDH2",
+        "KAT6B",
+        "ACYP2",
+        "PIGL",
+        "CASD1"
+    ],
+    "M_160": [
+        "KAT8",
+        "ATAT1",
+        "HMGCL",
+        "ALDH6A1",
+        "KAT5",
+        "ACLY",
+        "NCOA1",
+        "HADHB",
+        "MCM3AP",
+        "CDYL",
+        "FASN",
+        "HMGCS1",
+        "CLOCK",
+        "CTDSP2",
+        "GTF3C4",
+        "TAF1",
+        "KAT6B",
+        "CASD1",
+        "GNPNAT1"
+    ],
+    "M_161": [
+        "ALG13"
+    ],
+    "M_204": [
+        "KHSRP",
+        "DDR2"
+    ],
+    "M_283": [
+        "GAPDH"
+    ],
+    "M_551": [
+        "GTF3C4",
+        "CLOCK",
+        "PGM3"
+    ],
+    "M_8283": [
+        "HAT1",
+        "CLOCK",
+        "GOLT1B"
+    ]
+}

@@ -1,0 +1,259 @@
+{
+    "M_1": [
+        "G6PC1"
+    ],
+    "M_4": [
+        "APRT",
+        "PRPS1L1"
+    ],
+    "M_7": [
+        "GAPDH"
+    ],
+    "M_9": [
+        "PGAM2",
+        "GAPDHS",
+        "GAPDH"
+    ],
+    "M_10": [
+        "PGK1",
+        "ENO1"
+    ],
+    "M_11": [
+        "PKM"
+    ],
+    "M_14": [
+        "LDHAL6B",
+        "HADHB",
+        "TAF1L",
+        "ACAA2",
+        "ACLY",
+        "CTDSP2",
+        "CS",
+        "DPAGT1",
+        "FAHD1"
+    ],
+    "M_16": [
+        "LDHAL6A",
+        "SBDS"
+    ],
+    "M_18": [
+        "GOT2",
+        "MDH2",
+        "MDH1"
+    ],
+    "M_19": [
+        "SUCLA2",
+        "SUCLG2",
+        "SUCLG1",
+        "RIMKLB"
+    ],
+    "M_20": [
+        "PDHA1",
+        "PDHB",
+        "SUCLG1",
+        "GLUD1",
+        "ALDH3A2",
+        "ALDH9A1",
+        "GOT2",
+        "SUCLA2",
+        "NIT2"
+    ],
+    "M_21": [
+        "KYAT3",
+        "KDM4C",
+        "GLUD1",
+        "TMLHE",
+        "TET3",
+        "CA5B",
+        "TYW1B",
+        "DDT",
+        "PHF8",
+        "KDM6A",
+        "KDM4B",
+        "HECA",
+        "BCKDHB",
+        "SPTLC1",
+        "OXCT1",
+        "KDM5C",
+        "L2HGDH",
+        "KDM3B",
+        "KDM2A",
+        "KDM7A",
+        "CSAD",
+        "SUCLG2",
+        "TYW1",
+        "ELOVL5",
+        "D2HGDH",
+        "TET2",
+        "KDM2B",
+        "ABAT"
+    ],
+    "M_22": [
+        "KDM5A",
+        "KDM4C",
+        "KDM3B",
+        "KDM2A",
+        "PHF8",
+        "HADHB",
+        "KDM6A",
+        "SDHB",
+        "TMLHE",
+        "SDHA",
+        "OXCT1",
+        "KDM5C",
+        "KDM2B",
+        "PHYH",
+        "P4HA1"
+    ],
+    "M_23": [
+        "KDM3B",
+        "FH",
+        "SUCLG1",
+        "TMLHE",
+        "SUCLG2",
+        "SUCLA2"
+    ],
+    "M_24": [
+        "MDH2",
+        "MDH1",
+        "FAHD1"
+    ],
+    "M_25": [
+        "GOT2",
+        "NIT2",
+        "MDH1"
+    ],
+    "M_26": [
+        "KDM2A",
+        "FPGS",
+        "GOLT1B",
+        "P4HA1"
+    ],
+    "M_28": [
+        "CLOCK",
+        "ACACA",
+        "HAT1"
+    ],
+    "M_29": [
+        "MDH1",
+        "EPRS1",
+        "PAICS",
+        "DPAGT1",
+        "RIOX2",
+        "BCAT2"
+    ],
+    "M_30": [
+        "QRSL1",
+        "GGT7",
+        "GMPS",
+        "CTPS2"
+    ],
+    "M_32": [
+        "FH",
+        "ALDH9A1",
+        "IDH2",
+        "IDH3B",
+        "MDH1",
+        "MDH2",
+        "GOT2",
+        "IDH3G"
+    ],
+    "M_33": [
+        "NIT2"
+    ],
+    "M_34": [
+        "FTCD",
+        "NAALADL2",
+        "RIMKLB"
+    ],
+    "M_36": [
+        "BCAT1",
+        "NAALADL2",
+        "AASS",
+        "RIMKLB"
+    ],
+    "M_39": [
+        "KYAT3",
+        "AGXT",
+        "AASS"
+    ],
+    "M_41": [
+        "GLUD1"
+    ],
+    "M_43": [
+        "GSR"
+    ],
+    "M_44": [
+        "GSTA4",
+        "GSTA1",
+        "ESD",
+        "GPX3",
+        "GPX2",
+        "GPX8"
+    ],
+    "M_45": [
+        "ESD",
+        "PRDX5",
+        "GPX3",
+        "GPX1",
+        "TXNRD3",
+        "GPX8"
+    ],
+    "M_46": [
+        "GSTT4"
+    ],
+    "M_48": [
+        "KYAT3",
+        "GGCT"
+    ],
+    "M_51": [
+        "HADHB",
+        "ACSL3",
+        "FASN",
+        "CDYL",
+        "NCOA1",
+        "MCM3AP",
+        "CASD1",
+        "ACLY",
+        "CLOCK",
+        "KAT6B",
+        "GNPNAT1",
+        "ALDH6A1",
+        "HMGCS1",
+        "ATAT1",
+        "GTF3C4",
+        "HMGCL",
+        "KAT8",
+        "TAF1",
+        "CTDSP2",
+        "KAT5"
+    ],
+    "M_53": [
+        "KDM4C",
+        "PHF8",
+        "KDM6A",
+        "KDM4B",
+        "TMLHE",
+        "TET3",
+        "KDM5C"
+    ],
+    "M_54": [
+        "ACYP2",
+        "PIGL",
+        "CASD1",
+        "ALDH2",
+        "KAT6B"
+    ],
+    "M_57": [
+        "DDR2",
+        "KHSRP"
+    ],
+    "M_58": [
+        "PGM3",
+        "GTF3C4",
+        "CLOCK"
+    ],
+    "M_62": [
+        "ALG13"
+    ]
+}

@@ -33,10 +33,12 @@ def replace_nan_predictions(predictions, default_value=0.0):
     
 
 class AdaptiveModel(L.LightningModule):
-    def __init__(self, input_dim, dropout_rate=0.1, output_dim=1):
+    def __init__(self, input_dim, input_dim2, dropout_rate=0.1, output_dim=1, theta=0.6):
         super().__init__()
         self.input_dim = input_dim
+        self.input_dim2 = input_dim2
         self.dropout_rate = dropout_rate
+        self.theta = theta
 
         self.activation = nn.LeakyReLU()
         self.output_activation = nn.ReLU()
@@ -54,14 +56,27 @@ class AdaptiveModel(L.LightningModule):
         self.bn3 = nn.BatchNorm1d(8 * input_dim)
         self.dropout3 = nn.Dropout(self.dropout_rate)
 
-        self.fc_out = nn.Linear(8 * input_dim, output_dim)
+        if input_dim2 > 0:    # 与'not torch.isnan(y).all()'等价
+            self.alpha = nn.Parameter(torch.tensor(0.5))
+            self.adaptive_layer_4 = AdaptiveLayer(input_dim2, 2 * input_dim2)
+            self.bn4 = nn.BatchNorm1d(2 * input_dim2)
+            self.dropout4 = nn.Dropout(self.dropout_rate)
+
+        self.fc_out = nn.Linear(8 * input_dim + 2 * input_dim2, output_dim)
 
     def skip_connection(self, x_pre):
         # repeat the x_pre 2 times to make the x_repeated's lengthe is 2 times of x_pre
         x_repeated = x_pre.repeat(1, 2)
         return x_repeated
 
-    def forward(self, x):
+    @property
+    def fusion_weight(self):
+        if self.input_dim2 > 0:
+            return torch.sigmoid(self.alpha).item()
+        else:
+            return None
+
+    def forward(self, x, y):
         x1 = self.adaptive_layer_1(x)
         x1 = self.bn1(x1)
         x1 += self.skip_connection(x)
@@ -83,12 +98,28 @@ class AdaptiveModel(L.LightningModule):
         x3 = self.activation(x3)
         x3 = self.dropout3(x3)
 
+        # Auxiliary block
+        if not torch.isnan(y).all():
+            y1 = self.adaptive_layer_4(y)
+            y1 = self.bn4(y1)
+            y1 += self.skip_connection(y)
+            y1 = self.activation(y1)
+            if self.input_dim2 > 2:
+                y1 = self.dropout4(y1)
+        else:
+            y1 = None
+
         # Output layer
-        x4 = self.fc_out(x3)
+        if y1 is not None:
+            weight = self.theta + (1 - self.theta) * torch.sigmoid(self.alpha)
+            x4 = torch.cat((weight * x3, (1 - weight) * y1), dim=1)
+        else:
+            x4 = x3
+        x4 = self.fc_out(x4)
         x4 = self.output_activation(x4)
 
         x4 = replace_nan_predictions(x4)
-        
+
         return x4
 
 
@@ -125,8 +156,8 @@ class AdaptiveMultipleModels(L.LightningModule):
             self.compounds_reactions_tensor, dtype=torch.float32, device=self.device
         )
 
-    def forward(self, x, reaction_name):
-        outputs = self.models[reaction_name](x)
+    def forward(self, x, y, reaction_name):
+        outputs = self.models[reaction_name](x, y)
         return outputs
 
     def replace_nan_weights(self, value=1e-6):
@@ -144,7 +175,7 @@ class AdaptiveMultipleModels(L.LightningModule):
         Y_batch = []
         samples_reactions_batch = []
         samples_reactions_dataMean_batch = []
-        batch_size = batch[list(batch.keys())[0]]["X"].shape[0]
+        batch_size = batch[list(batch.keys())[0]]["X"][0].shape[0]
         for reaction_name in self.reaction_names:
             # model is None, add 0s to the batch and 1s to the mean batch
             if self.models[reaction_name] is None:
@@ -161,12 +192,13 @@ class AdaptiveMultipleModels(L.LightningModule):
                 continue
 
             # if the model is not None, get the output
-            X = batch[reaction_name]["X"]
+            X1 = batch[reaction_name]["X"][0]
+            X2 = batch[reaction_name]["X"][1]
             Y = batch[reaction_name]["Y"]
             Y_batch.append(Y)
-            output = self.forward(X, reaction_name)
+            output = self.forward(X1, X2, reaction_name)
             samples_reactions_batch.append(output)
-            samples_reactions_dataMean_batch.append(X.mean(dim=1))
+            samples_reactions_dataMean_batch.append(X1.mean(dim=1))
 
         samples_reactions_batch = (
             torch.stack(samples_reactions_batch).transpose(0, 1).squeeze(2)
@@ -226,7 +258,7 @@ class AdaptiveMultipleModels(L.LightningModule):
     def validation_step(self, batch, batch_idx):
         samples_reactions_batch = []
         samples_reactions_dataMean_batch = []
-        batch_size = batch[list(batch.keys())[0]]["X"].shape[0]
+        batch_size = batch[list(batch.keys())[0]]["X"][0].shape[0]
         Y_batch = []
         for reaction_name in self.reaction_names:
             # model is None, add 0s to the batch and 1s to the mean batch
@@ -244,12 +276,13 @@ class AdaptiveMultipleModels(L.LightningModule):
                 continue
 
             # if the model is not None, get the output
-            X = batch[reaction_name]["X"]
+            X1 = batch[reaction_name]["X"][0]
+            X2 = batch[reaction_name]["X"][1]
             Y = batch[reaction_name]["Y"]
             Y_batch.append(Y)
-            output = self.forward(X, reaction_name)
+            output = self.forward(X1, X2, reaction_name)
             samples_reactions_batch.append(output)
-            samples_reactions_dataMean_batch.append(X.mean(dim=1))
+            samples_reactions_dataMean_batch.append(X1.mean(dim=1))
 
         samples_reactions_batch = (
             torch.stack(samples_reactions_batch).transpose(0, 1).squeeze(2)
@@ -301,7 +334,7 @@ class AdaptiveMultipleModels(L.LightningModule):
     def test_step(self, batch, batch_idx):
         samples_reactions_batch = []
         samples_reactions_dataMean_batch = []
-        batch_size = batch[list(batch.keys())[0]]["X"].shape[0]
+        batch_size = batch[list(batch.keys())[0]]["X"][0].shape[0]
         Y_batch = []
         for reaction_name in self.reaction_names:
             # model is None, add 0s to the batch and 1s to the mean batch
@@ -317,12 +350,13 @@ class AdaptiveMultipleModels(L.LightningModule):
                 continue
 
             # if the model is not None, get the output
-            X = batch[reaction_name]["X"]
+            X1 = batch[reaction_name]["X"][0]
+            X2 = batch[reaction_name]["X"][1]
             Y = batch[reaction_name]["Y"]
             Y_batch.append(Y)
-            output = self.forward(X, reaction_name)
+            output = self.forward(X1, X2, reaction_name)
             samples_reactions_batch.append(output)
-            samples_reactions_dataMean_batch.append(X.mean(dim=1))
+            samples_reactions_dataMean_batch.append(X1.mean(dim=1))
 
         samples_reactions_batch = (
             torch.stack(samples_reactions_batch).transpose(0, 1).squeeze(2)

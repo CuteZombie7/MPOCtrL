@@ -209,13 +209,72 @@ def load_reactions_genes(args):
 
     return reactions_genes
 
+'''
+#V1
+def load_reactions_auxiliary_genes(args, map, reactions_genes_dict):
+    read_path = os.path.join(args.network_dir_path, args.reactions_auxiliary_genes_file_name)
+    with open(read_path, 'r') as f:
+        compounds_genes = json.load(f)
+    compounds_genes = {k.lower(): v for k,v in compounds_genes.items()}
+    res = {}
+    for compound in map.index:
+        compound_lower = compound.lower()
+        if compound_lower not in compounds_genes:
+            pos = compound_lower.rfind('_mito')
+            if pos < 0:
+                pos = compound_lower.rfind('_cyto')
+            if pos < 0:
+                continue
+            # remove suffix
+            compound_lower = compound_lower[:pos]
+        if compound_lower not in compounds_genes:
+            continue
+        nodes_in = []
+        nodes_out = []
+        row = map.loc[compound]
+        for index, value in row.items():
+            if value == 1:
+                nodes_in.append(index)
+            elif value == -1:
+                nodes_out.append(index)
+        reactions_in = {}
+        reactions_out = {}
+        for node in nodes_in:
+            reactions_in[node] = set(reactions_genes_dict[node])
+        for node in nodes_out:
+            reactions_out[node] = set(reactions_genes_dict[node])
+        for key, value in reactions_in.items():
+            for key2, value2 in reactions_out.items():
+                if key2 == key:
+                    continue
+                for pair in compounds_genes[compound_lower]:
+                    pair = pair.split(',')
+                    if pair[0] in value and pair[1] in value2:
+                        if pair[1] not in value or args.add_dup_auxiliary_genes:
+                            if key not in res:
+                                res[key] = set()
+                            res[key].add(pair[1])
+                        if pair[0] not in value2 or args.add_dup_auxiliary_genes:
+                            if key2 not in res:
+                                res[key2] = set()
+                            res[key2].add(pair[0])
+    for key in res:
+        res[key] = list(res[key])
+
+    return res
+'''
+#V2
+def load_reactions_auxiliary_genes(args, map, reactions_genes_dict):
+    read_path = os.path.join(args.network_dir_path, args.reactions_auxiliary_genes_file_name)
+    with open(read_path, 'r') as f:
+        res = json.load(f)
+    return res
 
 def remove_allZero_rowAndCol(factors_nodes):
     # remove all zero rows and columns
     factors_nodes = factors_nodes.loc[~(factors_nodes == 0).all(axis=1), :]
     factors_nodes = factors_nodes.loc[:, ~(factors_nodes == 0).all(axis=0)]
     return factors_nodes
-
 
 def remove_margin_compounds(factors_nodes):
     n_factors, _ = factors_nodes.shape
@@ -266,7 +325,7 @@ def get_data_with_intersection_gene(gene_expression, reactions_genes):
     return gene_expression[list(intersection_genes)], reactions_genes_new
 
 
-def data_pre_processing(gene_expression, reactions_genes, compounds_reactions_df):
+def data_pre_processing(gene_expression, reactions_genes, compounds_reactions_df, reactions_genes2):
     # for the compounds_reactions adj matrix
     # remove outside compounds and reactions
     compounds_reactions_df = remove_margin_compounds(compounds_reactions_df)
@@ -279,17 +338,31 @@ def data_pre_processing(gene_expression, reactions_genes, compounds_reactions_df
         reaction_i: reactions_genes[reaction_i]
         for reaction_i in compounds_reactions_df.columns
     }
+    reactions_genes2 = {
+        reaction_i: reactions_genes2[reaction_i]
+        for reaction_i in compounds_reactions_df.columns if reaction_i in reactions_genes2
+    }
+
     # get the data with intersection genes
     gene_expression, reactions_genes = get_data_with_intersection_gene(
         gene_expression, reactions_genes
     )
+    genes_set = set()
+    for value in reactions_genes.values():
+        for gene in value:
+            genes_set.add(gene)
+    for key, value in reactions_genes2.items():
+        for gene in value:
+            if gene not in genes_set:
+                value.remove(gene)
+    reactions_genes2 = {k: v for k, v in reactions_genes2.items() if len(v) > 0}
 
     # if there is no intersection genes, just return
     if gene_expression is None:
         # print("\n No Intersection of Genes between Data and Reactions! \n")
         return None, None, None
 
-    return gene_expression, reactions_genes, compounds_reactions_df
+    return gene_expression, reactions_genes, compounds_reactions_df, reactions_genes2
 
 
 def min_max_normalize(df):
@@ -326,19 +399,33 @@ def fill_zeros_with_mean(data):
     return data
 
 
-def normalize_gene_expression(gene_expression, reactions_genes):
+def normalize_gene_expression(gene_expression, reactions_genes, reactions_genes2):
     n_samples = gene_expression.shape[0]
     reactions_geneExpressionMean = {}
     reactions_gene_expression_normalized = {}
 
     for reaction, genes in reactions_genes.items():
         cur_data = None
-        if genes is not None:
+        if genes:
             cur_data = gene_expression.loc[:, genes].values
             cur_data = min_max_normalize(cur_data)
             reactions_gene_expression_normalized[reaction] = cur_data
         else:
             reactions_gene_expression_normalized[reaction] = cur_data
+
+    # it's obvious that reactions_genes2.keys() is a subset of reactions_genes.keys(),
+    # according to function 'load_reactions_auxiliary_genes'
+    for reaction, genes in reactions_genes2.items():
+        cur_data = None
+        if genes:
+            cur_data = gene_expression.loc[:, genes].values
+            cur_data = min_max_normalize(cur_data)
+            reactions_gene_expression_normalized[reaction] = (reactions_gene_expression_normalized[reaction], cur_data)
+        else:
+            reactions_gene_expression_normalized[reaction] = (reactions_gene_expression_normalized[reaction], cur_data)
+    for key, value in reactions_gene_expression_normalized.items():
+        if not isinstance(value, tuple):
+            reactions_gene_expression_normalized[key] = (value, None)
     return reactions_gene_expression_normalized
 
 
@@ -349,19 +436,17 @@ class CombinedDataset(Dataset):
 
         Args:
             reactions_x_y (dict): A dictionary where keys are reaction identifiers and values are tuples (x, y).
-                                  x and y should be numpy arrays. x is a matrix, y is a vector.
+                                  x and y should be numpy arrays. x is a tuple of 2 matrices, y is a vector.
         """
         # Precompute tensors and store them in a dictionary
-        self.reactions_x_y = {
-            reaction_i: (
-                torch.tensor(x, dtype=torch.float32),
-                torch.tensor(y, dtype=torch.float32),
-            )
-            for reaction_i, (x, y) in reactions_x_y.items()
-        }
+        self.reactions_x_y = {}
+        for reaction_i, (x, y) in reactions_x_y.items():
+            x1 = np.stack(x[:, 0], axis=0)
+            x2 = np.stack(x[:, 1], axis=0)
+            self.reactions_x_y[reaction_i] = ((torch.tensor(x1, dtype=torch.float32), torch.tensor(x2, dtype=torch.float32)), torch.tensor(y, dtype=torch.float32))
 
         # Use the first reaction to determine the number of samples
-        self.n_samples = next(iter(self.reactions_x_y.values()))[0].shape[0]
+        self.n_samples = next(iter(self.reactions_x_y.values()))[0][0].shape[0]
 
     def __len__(self):
         # Assuming all datasets have the same length
@@ -369,16 +454,16 @@ class CombinedDataset(Dataset):
 
     def __getitem__(self, idx):
         """
-        Get the batch for the given index, organized as {reaction_i: [x, y]}.
+        Get the batch for the given index, organized as {reaction_i: [(x1, x2), y]}.
 
         Args:
             idx (int): Index of the sample to retrieve.
 
         Returns:
-            dict: A dictionary where each key is a reaction identifier, and the value is a list [x, y].
+            dict: A dictionary where each key is a reaction identifier, and the value is a list [(x1, x2), y].
         """
         return {
-            reaction_i: {"X": x[idx], "Y": y[idx]}
+            reaction_i: {"X": (x[0][idx], x[1][idx]), "Y": y[idx]}
             for reaction_i, (x, y) in self.reactions_x_y.items()
         }
 
@@ -390,20 +475,26 @@ def split_data(
     test_data = {}
     if flag == "train_val":
         for reaction_i, data_np in reactions_normalizedNpData_dict.items():
-            if data_np is None:
+            if data_np[0] is None:
                 continue
             y = samples_reactions_df[reaction_i].values
+            new_data_np = np.empty((len(data_np[0]), 2), dtype=object)
+            new_data_np[:, 0] = data_np[0].tolist()
+            new_data_np[:, 1] = data_np[1].tolist() if data_np[1] is not None else np.full((len(data_np[0]), 1), float('nan')).tolist()
             X_train, X_test, y_train, y_test = train_test_split(
-                data_np, y, test_size=test_size, random_state=42
+                new_data_np, y, test_size=test_size, random_state=42
             )
             train_data[reaction_i] = [X_train, y_train]
             test_data[reaction_i] = [X_test, y_test]
     elif flag == "predict":
         for reaction_i, data_np in reactions_normalizedNpData_dict.items():
-            if data_np is None:
+            if data_np[0] is None:
                 continue
             y = samples_reactions_df[reaction_i].values
-            train_data[reaction_i] = [data_np, y]
+            new_data_np = np.empty((len(data_np[0]), 2), dtype=object)
+            new_data_np[:, 0] = data_np[0].tolist()
+            new_data_np[:, 1] = data_np[1].tolist() if data_np[1] is not None else np.full((len(data_np[0]), 1), float('nan')).tolist()
+            train_data[reaction_i] = [new_data_np, y]
     return train_data, test_data
 
 

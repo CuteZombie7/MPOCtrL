@@ -107,8 +107,8 @@ def normalize_data_sum(matrix, target_sum=10.0, by="col"):
 class DirectedFactorGraph:
     def __init__(self, factors_variables):
         self.factors_variables = factors_variables
-        self._factor_names = factors_variables.index.values
-        self._variable_names = factors_variables.columns.values
+        self._factor_names = factors_variables.index.values   # 化合物
+        self._variable_names = factors_variables.columns.values    # 反应
         self._factors = {}
         self._variables = {}
 

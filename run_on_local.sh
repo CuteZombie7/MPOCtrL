@@ -1,9 +1,18 @@
 #!/bin/bash
+
+input_dir_path="inputs"
+network_dir_path="networks"
+output_dir_path="outputs"
+gene_expression_file_name="Tabula_Sapiens_Biohub_pseudo_bulk_counts_output_cpm_log1p.csv.gz"
+compounds_reactions_file_name="KEGG_Full_connected_cmMat.csv"
+reactions_genes_file_name="KEGG_Full_connected_modules_genes.json"
+
 uv run src/main.py \
-    --input_dir_path /your_data_path_to_data \
-    --network_dir_path /your_path_to_compounds_reaction_network \
-    --output_dir_path /your_path_to_save_results \
-    --gene_expression_file_name your_data_file_name \
-    --compounds_reactions_file_name your_reaction_data \
-    --reactions_genes_file_name your_reactions_genes_data \
-    --n_epoch 200
+    --input_dir_path inputs \
+    --network_dir_path networks \
+    --output_dir_path outputs \
+    --gene_expression_file_name Tabula_Sapiens_Biohub_pseudo_bulk_counts_output_cpm_log1p.csv.gz \
+    --compounds_reactions_file_name GGSL_V3_cmMat.csv \
+    --reactions_genes_file_name GGSL_V3_reactions_genes.json \
+    --n_epoch 200 \
+	(--add_dup_auxiliary_genes)

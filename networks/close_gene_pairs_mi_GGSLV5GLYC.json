@@ -1,0 +1,263 @@
+{
+    "M_3": [
+        "GLB1"
+    ],
+    "M_4": [
+        "PGM2",
+        "COASY",
+        "UMPS",
+        "HPRT1"
+    ],
+    "M_6": [
+        "KHSRP",
+        "MPI",
+        "GNPDA2"
+    ],
+    "M_7": [
+        "GAPDH"
+    ],
+    "M_10": [
+        "GLYCTK"
+    ],
+    "M_13": [
+        "PDHA1"
+    ],
+    "M_14": [
+        "ATAT1",
+        "GTF3C4",
+        "HMGCL",
+        "NAT9",
+        "TAF1",
+        "HAT1",
+        "CASD1",
+        "ACLY",
+        "PCCB",
+        "CS",
+        "DPAGT1",
+        "GNPNAT1",
+        "RIDA",
+        "FAHD1",
+        "KAT5"
+    ],
+    "M_18": [
+        "HADHB",
+        "HAT1",
+        "MDH1",
+        "ACO2",
+        "ACLY",
+        "GOT2"
+    ],
+    "M_20": [
+        "KYAT3",
+        "PDHB",
+        "GGCX",
+        "SUCLG1",
+        "ELOVL1",
+        "GOT2",
+        "SUCLA2",
+        "TYW1B",
+        "NIT2",
+        "DDT",
+        "KDM4B",
+        "UROD",
+        "MSMO1",
+        "PDHA1",
+        "BCAT2",
+        "NIT1",
+        "NSDHL",
+        "ALDH9A1",
+        "TYW1",
+        "UMPS",
+        "GOLT1B",
+        "D2HGDH",
+        "P3H1",
+        "GCDH"
+    ],
+    "M_21": [
+        "KYAT3",
+        "PDHB",
+        "KDM4C",
+        "IDH3B",
+        "TET3",
+        "CA5B",
+        "TYW1B",
+        "DDT",
+        "PHF8",
+        "KDM6A",
+        "KDM4B",
+        "TYW5",
+        "SPTLC1",
+        "KDM5C",
+        "OXSM",
+        "L2HGDH",
+        "ALKBH1",
+        "ACAA1",
+        "ECHDC1",
+        "TYW1",
+        "UMPS",
+        "GOLT1B",
+        "D2HGDH",
+        "GCDH"
+    ],
+    "M_22": [
+        "SDHA",
+        "KDM4C",
+        "SDHB"
+    ],
+    "M_23": [
+        "FH",
+        "SUCLG1"
+    ],
+    "M_24": [
+        "MDH2",
+        "MDH1",
+        "FAHD1"
+    ],
+    "M_25": [
+        "GOT2",
+        "NIT2",
+        "MDH1"
+    ],
+    "M_27": [
+        "ACLY"
+    ],
+    "M_28": [
+        "MCM3AP",
+        "KAT8",
+        "HAT1",
+        "HMGCL"
+    ],
+    "M_29": [
+        "GATB",
+        "AGA",
+        "MDH1",
+        "GATC",
+        "PAICS",
+        "DPAGT1",
+        "CTPS2",
+        "RIOX2",
+        "BCAT2"
+    ],
+    "M_30": [
+        "QRSL1"
+    ],
+    "M_31": [
+        "COASY",
+        "IDH3A",
+        "QRSL1",
+        "GOT2",
+        "PHYH",
+        "BCAT2",
+        "NIT2"
+    ],
+    "M_32": [
+        "NIT1",
+        "FH",
+        "ALDH9A1",
+        "IDH3B",
+        "MDH1",
+        "MDH2",
+        "DPAGT1",
+        "GOT2",
+        "NIT2",
+        "IDH3G"
+    ],
+    "M_33": [
+        "NIT2"
+    ],
+    "M_34": [
+        "ALDH18A1",
+        "GATB",
+        "COASY",
+        "GOLT1B",
+        "GATC",
+        "DPAGT1",
+        "CTPS2"
+    ],
+    "M_35": [
+        "KYAT3",
+        "GATB",
+        "CTPS1",
+        "DFFB",
+        "COASY",
+        "PFAS",
+        "CTPS2",
+        "QARS1",
+        "GMPS",
+        "NADSYN1"
+    ],
+    "M_38": [
+        "GATB",
+        "DFFB",
+        "COASY",
+        "QRSL1",
+        "GATC"
+    ],
+    "M_39": [
+        "KYAT3",
+        "GATB",
+        "DFFB",
+        "DPAGT1",
+        "CTPS2",
+        "PFAS",
+        "BCAT2",
+        "NADSYN1"
+    ],
+    "M_42": [
+        "GATB",
+        "EARS2",
+        "PFAS"
+    ],
+    "M_43": [
+        "EARS2",
+        "GATB",
+        "COASY",
+        "GGCT",
+        "QRSL1",
+        "NFS1",
+        "GATC",
+        "DPAGT1",
+        "GOT2",
+        "BCAT2",
+        "GMPS"
+    ],
+    "M_44": [
+        "LANCL1"
+    ],
+    "M_48": [
+        "KYAT3",
+        "CARS1",
+        "TXNRD2"
+    ],
+    "M_51": [
+        "ATAT1",
+        "CRAT",
+        "DLAT",
+        "GTF3C4",
+        "NAT9",
+        "ACOT2",
+        "FASN",
+        "ACAA1",
+        "KAT8",
+        "HAT1",
+        "HMGCL",
+        "CASD1",
+        "KAT7",
+        "CDYL",
+        "GNPNAT1",
+        "KAT5"
+    ],
+    "M_53": [
+        "PHF8"
+    ],
+    "M_54": [
+        "ALDH2"
+    ],
+    "M_58": [
+        "GTF3C4",
+        "GNPDA2",
+        "NAT9",
+        "PGM3",
+        "KAT5"
+    ]
+}

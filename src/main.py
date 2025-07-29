@@ -19,6 +19,7 @@ from multiprocessing import cpu_count
 from data_interface import load_gene_expression
 from data_interface import load_compounds_reactions
 from data_interface import load_reactions_genes
+from data_interface import load_reactions_auxiliary_genes
 from data_interface import data_pre_processing
 from data_interface import normalize_gene_expression
 from data_interface import split_data
@@ -59,12 +60,13 @@ def train(
     reactions_genes_dict,
     n_samples,
     n_reactions,
+    reactions_genes_dict2
 ):
     # set the random seed
     #L.seed_everything(args.seed)
     reactions_list = compounds_reactions_df.columns.tolist()
     reactions_geneLength = {
-        reaction_i: (
+        reaction_i: ((
             (
                 1
                 if len(reactions_genes_dict[reaction_i]) == 1
@@ -72,13 +74,21 @@ def train(
             )
             if reactions_genes_dict[reaction_i]
             else 0
-        )
+        ),(
+             (
+                 1
+                 if len(reactions_genes_dict2[reaction_i]) == 1
+                 else len(reactions_genes_dict2[reaction_i])
+             )
+             if reaction_i in reactions_genes_dict2 and reactions_genes_dict2[reaction_i]
+             else 0
+        ))
         for reaction_i in reactions_list
     }
 
     # define a group of models, # of models = # of reactions
     models = {
-        reaction_i: (AdaptiveModel(input_dim=n_genes) if n_genes > 0 else None)
+        reaction_i: (AdaptiveModel(input_dim=n_genes[0], input_dim2=n_genes[1]) if n_genes[0] > 0 else None)
         for reaction_i, n_genes in reactions_geneLength.items()
     }
 
@@ -352,17 +362,19 @@ def main(args):
     # rows:=compounds, columns:=reactions, entries are 0,1,-1
     compounds_reactions_df = load_compounds_reactions(args)
     n_compounds, n_reactions = compounds_reactions_df.shape
+    reactions_genes_dict2 = load_reactions_auxiliary_genes(args, compounds_reactions_df, reactions_genes_dict)
 
     # data pre-processing, remove the genes which are not in the reactions_genes
     # and remove the reactions which are not in the compounds_reactions
     # and remove the compounds which are not in the compounds_reactions
     # and remove the samples which are not in the gene_expression_data
-    gene_expression_data, reactions_genes_dict, compounds_reactions_df = (
+    gene_expression_data, reactions_genes_dict, compounds_reactions_df, reactions_genes_dict2 = (
         data_pre_processing(
-            gene_expression_data, reactions_genes_dict, compounds_reactions_df
+            gene_expression_data, reactions_genes_dict, compounds_reactions_df, reactions_genes_dict2
         )
     )
     print(f"Compounds Reactions ADJ Matrix: \n{compounds_reactions_df}\n")
+    print(reactions_genes_dict2)
 
     if gene_expression_data is None:
         print("\nNo Intersection of Genes between Data and (reactions)Reactions! \n")
@@ -371,7 +383,7 @@ def main(args):
     # normalize the gene expression data
     # return a dictionary, key:=reaction, value:=normalized gene expression data
     reactions_normalizedNpData_dict = normalize_gene_expression(
-        gene_expression_data, reactions_genes_dict
+        gene_expression_data, reactions_genes_dict, reactions_genes_dict2
     )
 
     # initialize the output dir path
@@ -386,6 +398,7 @@ def main(args):
         reactions_genes_dict,
         n_samples,
         n_reactions,
+        reactions_genes_dict2
     )
 
     # plot the loss curves
@@ -478,7 +491,19 @@ def parse_arguments(parser):
         default="NA",
         help="The json file contains genes for each reaction. We provide human and mouse two models in scFEA.",
     )
-
+    parser.add_argument(
+        "--reactions_auxiliary_genes_file_name",
+        type=str,
+        default="close_gene_pairs_mi_GGSLV3.json",
+        help="The json file contains auxiliary genes for each reaction.",
+    )
+    '''
+    parser.add_argument(
+        "--add_dup_auxiliary_genes",
+        action='store_true',
+        help="Whether add auxiliary genes that already exist in original genes",
+    )
+    '''
     parser.add_argument("--experiment_name", type=str, default="Flux")
 
     # parameters for scFEA

@@ -1,7 +1,7 @@
 import os
 
-# import pandas as pd
-import fireducks.pandas as pd
+import pandas as pd
+# import fireducks.pandas as pd
 import numpy as np
 from joblib import Parallel, delayed
 from multiprocessing import cpu_count
@@ -157,7 +157,7 @@ def parse_args():
     parser.add_argument(
         "--if_log1p",
         type=bool,
-        default=False,
+        default=True,
         help="Apply log1p transformation to the data",
     )
     return parser.parse_args()
@@ -178,7 +178,7 @@ def main():
     else:
         print(f"CPM Processing {data_path} without log1p...")
 
-    process_single_file(file_path=data_path, log1p=if_log1p)
+    process_single_file(data_path=data_path, log1p=if_log1p)
 
 
 if __name__ == "__main__":
