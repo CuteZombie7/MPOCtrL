@@ -352,7 +352,6 @@ def main(args):
     # but the data will be transposed to rows:=samples/cells,
     # cols:=genes automatically
     gene_expression_data = load_gene_expression(args)
-    n_samples, n_genes = gene_expression_data.shape
 
     # load the reactions and the contained genes, stored in a json file
     reactions_genes_dict = load_reactions_genes(args)
@@ -361,7 +360,6 @@ def main(args):
     # compouns_reactions is the adj matrix of the factor graph (reaction graph)
     # rows:=compounds, columns:=reactions, entries are 0,1,-1
     compounds_reactions_df = load_compounds_reactions(args)
-    n_compounds, n_reactions = compounds_reactions_df.shape
     reactions_genes_dict2 = load_reactions_auxiliary_genes(args, compounds_reactions_df, reactions_genes_dict)
 
     # data pre-processing, remove the genes which are not in the reactions_genes
@@ -380,6 +378,9 @@ def main(args):
     if gene_expression_data is None:
         print("\nNo Intersection of Genes between Data and (reactions)Reactions! \n")
         return False
+
+    n_samples, n_genes = gene_expression_data.shape
+    n_compounds, n_reactions = compounds_reactions_df.shape
 
     # normalize the gene expression data
     # return a dictionary, key:=reaction, value:=normalized gene expression data
