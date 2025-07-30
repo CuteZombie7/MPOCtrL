@@ -374,6 +374,7 @@ def main(args):
         )
     )
     print(f"Compounds Reactions ADJ Matrix: \n{compounds_reactions_df}\n")
+    print(reactions_genes_dict)
     print(reactions_genes_dict2)
 
     if gene_expression_data is None:

@@ -1,0 +1,339 @@
+{
+    "M_1": [
+        "SLC2A1",
+        "SLC2A2",
+        "SLC2A3",
+        "SLC2A4"
+    ],
+    "M_2": [
+        "PGM1",
+        "PGM2"
+    ],
+    "M_3": [
+        "HK1",
+        "HK2",
+        "HK3",
+        "ADPGK",
+        "GCK"
+    ],
+    "M_4": [
+        "G6PD",
+        "H6PD",
+        "PGLS",
+        "PGD",
+        "RPIA",
+        "PRPS1",
+        "PRPS2",
+        "TALDO1",
+        "TKT",
+        "TKTL1",
+        "TKTL2",
+        "RPE",
+        "RPEL1"
+    ],
+    "M_5": [
+        "GPI"
+    ],
+    "M_6": [
+        "PFKL",
+        "PFKM",
+        "PFKP"
+    ],
+    "M_7": [
+        "ALDOA",
+        "ALDOB",
+        "ALDOC",
+        "TPI1"
+    ],
+    "M_8": [
+        "GAPHD"
+    ],
+    "M_9": [
+        "BPGM",
+        "PGK1",
+        "PGK2"
+    ],
+    "M_10": [
+        "PGAM1",
+        "PGAM2",
+        "PGAM4",
+        "BPGM",
+        "MINPP1"
+    ],
+    "M_11": [
+        "ENO1",
+        "ENO2",
+        "ENO3",
+        "ENO4"
+    ],
+    "M_12": [
+        "PKM",
+        "PKLR"
+    ],
+    "M_13": [
+        "MPC1",
+        "MPC2"
+    ],
+    "M_14": [
+        "PDHA1",
+        "PDHA2",
+        "PDHB",
+        "DLAT"
+    ],
+    "M_15": [
+        "PHGDH",
+        "PSAT1",
+        "PSPH"
+    ],
+    "M_16": [
+        "LDHA",
+        "LDHB",
+        "LDHC"
+    ],
+    "M_17": [
+        "SLC16A1",
+        "SLC16A3"
+    ],
+    "M_18": [
+        "CS"
+    ],
+    "M_19": [
+        "ACO1",
+        "ACO2"
+    ],
+    "M_20": [
+        "IDH1",
+        "IDH2",
+        "IDH3A",
+        "IDH3B",
+        "IDH3G"
+    ],
+    "M_21": [
+        "OGDH",
+        "DLST",
+        "OGDHL"
+    ],
+    "M_22": [
+        "SUCLG2",
+        "SUCLG1",
+        "SUCLA2"
+    ],
+    "M_23": [
+        "SDHA",
+        "SDHB",
+        "SDHC",
+        "SDHD"
+    ],
+    "M_24": [
+        "FH"
+    ],
+    "M_25": [
+        "MDH2"
+    ],
+    "M_26": [
+        "GLUD1",
+        "GLUD2"
+    ],
+    "M_27": [
+        "SLC25A1"
+    ],
+    "M_28": [
+        "ACLY"
+    ],
+    "M_29": [
+        "GOT2"
+    ],
+    "M_30": [
+        "SLC25A12"
+    ],
+    "M_31": [
+        "GOT1"
+    ],
+    "M_32": [
+        "SLC25A11"
+    ],
+    "M_33": [
+        "MDH1"
+    ],
+    "M_34": [
+        "ALDH4A1",
+        "OPLAH",
+        "GPT2",
+        "AGXT",
+        "AGXT2",
+        "GGT6",
+        "GGT1",
+        "GGT7",
+        "GGT5",
+        "OAT",
+        "TAT",
+        "BCAT1",
+        "BCAT2",
+        "AADAT",
+        "AASS",
+        "GGH",
+        "NAALAD2",
+        "NAALADL1",
+        "FOLH1"
+    ],
+    "M_35": [
+        "PPAT",
+        "GATC",
+        "PET112",
+        "QRSL1"
+    ],
+    "M_36": [
+        "SLC1A1",
+        "SLC1A2",
+        "SLC1A3",
+        "SLC1A5",
+        "SLC1A6",
+        "SLC1A7",
+        "SLC17A6",
+        "SLC17A8",
+        "SLC17A7",
+        "SLC7A11",
+        "SLC7A11"
+    ],
+    "M_37": [
+        "SLC1A5",
+        "SLC38A1",
+        "SLC38A2"
+    ],
+    "M_38": [
+        "NADSYN1",
+        "CTPS1",
+        "CTPS2",
+        "CAD",
+        "ASNS",
+        "GFPT1",
+        "GFPT2",
+        "GMPS",
+        "CCBL2",
+        "CCBL1",
+        "QARS",
+        "PFAS",
+        "KYAT3",
+        "KYAT1"
+    ],
+    "M_39": [
+        "ALDH18A1",
+        "NAGS",
+        "GCLC",
+        "FPGS",
+        "PPAT",
+        "FTCD",
+        "GATC",
+        "PET112",
+        "QRSL1",
+        "GGT6",
+        "GGT1",
+        "GGT7",
+        "GGT5",
+        "EARS2",
+        "EPRS",
+        "TAT"
+    ],
+    "M_40": [
+        "SLC1A5"
+    ],
+    "M_41": [
+        "GLS",
+        "GLS2",
+        "GLUL"
+    ],
+    "M_42": [
+        "SLC25A22",
+        "SLC25A18"
+    ],
+    "M_43": [
+        "GCLC",
+        "GSS"
+    ],
+    "M_44": [
+        "GGT1",
+        "GGT5",
+        "GGT6",
+        "GGT7",
+        "GLO1",
+        "HAGH",
+        "HAGHL"
+    ],
+    "M_45": [
+        "GSTA1",
+        "GSTA2",
+        "GSTA3",
+        "GSTA4",
+        "GSTA5",
+        "GSTK1",
+        "GSTM1",
+        "GSTM2",
+        "GSTM3",
+        "GSTM4",
+        "GSTM5",
+        "GSTO1",
+        "GSTO2",
+        "GSTP1",
+        "GSTT1",
+        "GSTT2",
+        "GSTT2B",
+        "LTC4S",
+        "MGST1",
+        "MGST2",
+        "MGST3"
+    ],
+    "M_46": [
+        "GPX1",
+        "GPX2",
+        "GPX3",
+        "GPX4",
+        "GPX5",
+        "GPX6",
+        "GPX7",
+        "GPX8",
+        "TXNDC12"
+    ],
+    "M_47": [
+        "CBS",
+        "CTH"
+    ],
+    "M_48": [
+        "CARS",
+        "CARS2",
+        "CDO1",
+        "NFS1",
+        "PPCS"
+    ],
+    "M_49": [
+        "SHMT1",
+        "SHMT2"
+    ],
+    "M_50": [
+        "SDS",
+        "SDSL"
+    ],
+    "M_51": [
+        "ACAT1",
+        "ACAT2",
+        "ACAT2",
+        "HMGCS2",
+        "HMGCR",
+        "MVK",
+        "PMVK",
+        "MVD",
+        "IDI1",
+        "IDI2",
+        "FDPS",
+        "GGPS1",
+        "ACACA",
+        "ACACB"
+    ],
+    "M_52": [
+        "GAD1",
+        "GAD2"
+    ],
+    "M_53": [
+        "ABAT",
+        "ALDH5A1"
+    ]
+}

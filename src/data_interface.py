@@ -268,7 +268,6 @@ def load_reactions_auxiliary_genes(args, map, reactions_genes_dict):
     read_path = os.path.join(args.network_dir_path, args.reactions_auxiliary_genes_file_name)
     with open(read_path, 'r') as f:
         res = json.load(f)
-    res = {k: v for k, v in res.items() if k in reactions_genes_dict}
     return res
 
 def remove_allZero_rowAndCol(factors_nodes):
@@ -297,7 +296,7 @@ def remove_margin_compounds(factors_nodes):
     # print(SEP_SIGN)
     return factors_nodes
 
-
+'''
 def get_data_with_intersection_gene(gene_expression, reactions_genes):
     all_genes_in_gene_expression = set(gene_expression.columns.values.tolist())
     all_genes_in_reactions = []
@@ -324,6 +323,28 @@ def get_data_with_intersection_gene(gene_expression, reactions_genes):
             reactions_genes_new[reaction_i] = None
 
     return gene_expression[list(intersection_genes)], reactions_genes_new
+'''
+
+def get_data_with_intersection_gene(gene_expression, reactions_genes, reactions_genes2):
+    all_genes_in_gene_expression = set(gene_expression.columns.values.tolist())
+    genes = set()
+    new_reactions_genes = {}
+    for k in reactions_genes:
+        new_reactions_genes[k] = set()
+        for gene in reactions_genes[k]:
+            if gene in all_genes_in_gene_expression:
+                genes.add(gene)
+                new_reactions_genes[k].add(gene)
+        new_reactions_genes[k] = list(new_reactions_genes[k])
+    new_reactions_genes2 = {}
+    for k in reactions_genes2:
+        new_reactions_genes2[k] = set()
+        for gene in reactions_genes2[k]:
+            if gene in all_genes_in_gene_expression:
+                genes.add(gene)
+                new_reactions_genes2[k].add(gene)
+        new_reactions_genes2[k] = list(new_reactions_genes2[k])
+    return gene_expression[list(genes)], new_reactions_genes, new_reactions_genes2
 
 
 def data_pre_processing(gene_expression, reactions_genes, compounds_reactions_df, reactions_genes2):
@@ -345,23 +366,14 @@ def data_pre_processing(gene_expression, reactions_genes, compounds_reactions_df
     }
 
     # get the data with intersection genes
-    gene_expression, reactions_genes = get_data_with_intersection_gene(
-        gene_expression, reactions_genes
+    gene_expression, reactions_genes, reactions_genes2= get_data_with_intersection_gene(
+        gene_expression, reactions_genes, reactions_genes2
     )
-    genes_set = set()
-    for value in reactions_genes.values():
-        for gene in value:
-            genes_set.add(gene)
-    for key, value in reactions_genes2.items():
-        for gene in value:
-            if gene not in genes_set:
-                value.remove(gene)
-    reactions_genes2 = {k: v for k, v in reactions_genes2.items() if len(v) > 0}
 
     # if there is no intersection genes, just return
     if gene_expression is None:
         # print("\n No Intersection of Genes between Data and Reactions! \n")
-        return None, None, None
+        return None, None, None, None
 
     return gene_expression, reactions_genes, compounds_reactions_df, reactions_genes2
 
@@ -414,8 +426,6 @@ def normalize_gene_expression(gene_expression, reactions_genes, reactions_genes2
         else:
             reactions_gene_expression_normalized[reaction] = cur_data
 
-    # it's obvious that reactions_genes2.keys() is a subset of reactions_genes.keys(),
-    # according to function 'load_reactions_auxiliary_genes'
     for reaction, genes in reactions_genes2.items():
         cur_data = None
         if genes:
